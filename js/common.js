@@ -18,6 +18,14 @@ class DataManager {
         if (!localStorage.getItem('crediario')) {
             localStorage.setItem('crediario', JSON.stringify([]));
         }
+        // Initialize sequential counters
+        if (!localStorage.getItem('sequentialCounters')) {
+            localStorage.setItem('sequentialCounters', JSON.stringify({
+                produtos: 0,
+                clientes: 0,
+                vendas: 0
+            }));
+        }
     }
 
     // Product management
@@ -36,6 +44,7 @@ class DataManager {
         } else {
             // Add new
             produto.id = this.generateId();
+            produto.codigo = this.generateSequentialCode('produtos');
             produto.dataCadastro = new Date().toISOString();
             produtos.push(produto);
         }
@@ -71,6 +80,7 @@ class DataManager {
             }
         } else {
             cliente.id = this.generateId();
+            cliente.codigo = this.generateSequentialCode('clientes');
             cliente.dataCadastro = new Date().toISOString();
             clientes.push(cliente);
         }
@@ -100,6 +110,7 @@ class DataManager {
     saveVenda(venda) {
         const vendas = this.getVendas();
         venda.id = this.generateId();
+        venda.controle = this.generateSequentialCode('vendas');
         venda.dataVenda = new Date().toISOString();
         vendas.push(venda);
         localStorage.setItem('vendas', JSON.stringify(vendas));
@@ -132,6 +143,29 @@ class DataManager {
     // Utility functions
     generateId() {
         return Date.now().toString() + Math.random().toString(36).substr(2, 9);
+    }
+
+    generateSequentialCode(type) {
+        const counters = JSON.parse(localStorage.getItem('sequentialCounters')) || {
+            produtos: 0,
+            clientes: 0,
+            vendas: 0
+        };
+        
+        counters[type] = counters[type] + 1;
+        localStorage.setItem('sequentialCounters', JSON.stringify(counters));
+        
+        // Format with prefix and padding
+        switch(type) {
+            case 'produtos':
+                return `PROD${counters[type].toString().padStart(4, '0')}`;
+            case 'clientes':
+                return `CLI${counters[type].toString().padStart(4, '0')}`;
+            case 'vendas':
+                return `CTRL${counters[type].toString().padStart(4, '0')}`;
+            default:
+                return counters[type].toString();
+        }
     }
 
     formatCurrency(value) {

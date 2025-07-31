@@ -36,7 +36,7 @@
             <div class="form-container">
                 <h3>Pesquisar Clientes</h3>
                 <div class="flex gap-1">
-                    <input type="text" id="search-cliente" placeholder="Buscar por nome, CPF, telefone ou email" 
+                    <input type="text" id="search-cliente" placeholder="Buscar por código, nome, CPF, telefone ou email" 
                            style="flex: 1;" onkeyup="searchClientes()">
                     <button class="btn btn-secondary" onclick="searchClientes()">Buscar</button>
                 </div>
@@ -46,6 +46,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Código</th>
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Telefone</th>

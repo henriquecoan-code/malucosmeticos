@@ -104,7 +104,7 @@ function renderHistorico() {
     const tbody = document.getElementById('historico-table-body');
     
     if (filteredVendas.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" class="text-center">Nenhuma venda encontrada</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center">Nenhuma venda encontrada</td></tr>';
         renderPagination(0);
         return;
     }
@@ -116,6 +116,7 @@ function renderHistorico() {
     
     tbody.innerHTML = vendasPagina.map(venda => `
         <tr>
+            <td>${venda.controle || '-'}</td>
             <td>${dataManager.formatDate(venda.dataVenda)}</td>
             <td>${venda.clienteNome}</td>
             <td>${venda.itens.length} ${venda.itens.length === 1 ? 'item' : 'itens'}</td>
