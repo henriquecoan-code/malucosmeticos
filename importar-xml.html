@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importar XML - Malú Cosméticos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>Malú Cosméticos</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="produtos.html" class="nav-link">Produtos</a></li>
+                <li><a href="vendas.html" class="nav-link">Vendas</a></li>
+                <li><a href="clientes.html" class="nav-link">Clientes</a></li>
+                <li><a href="historico.html" class="nav-link">Histórico</a></li>
+                <li><a href="crediario.html" class="nav-link">Crediário</a></li>
+                <li><a href="importar-xml.html" class="nav-link active">Importar XML</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="xml-import-page">
+            <h2>Importação de XML</h2>
+            
+            <div class="form-container">
+                <h3>Upload de Arquivo XML</h3>
+                <p>Importe arquivos XML de notas fiscais para atualizar automaticamente o estoque e cadastro de produtos.</p>
+                
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-content">
+                        <div class="upload-icon">📄</div>
+                        <p>Arraste arquivos XML aqui ou <span class="upload-link">clique para selecionar</span></p>
+                        <p class="upload-help">Formatos aceitos: .xml (Máximo 10MB por arquivo)</p>
+                    </div>
+                    <input type="file" id="xml-file-input" accept=".xml" multiple style="display: none;">
+                </div>
+                
+                <div id="file-list" class="file-list" style="display: none;">
+                    <h4>Arquivos Selecionados:</h4>
+                    <div id="selected-files"></div>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <button class="btn btn-primary" onclick="processarXML()" id="btn-processar" disabled>
+                        Processar XML
+                    </button>
+                    <button class="btn btn-secondary" onclick="limparArquivos()">
+                        Limpar Arquivos
+                    </button>
+                </div>
+            </div>
+
+            <div id="processing-status" class="form-container" style="display: none;">
+                <h3>Status do Processamento</h3>
+                <div id="progress-container">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <p id="progress-text">Processando...</p>
+                </div>
+                <div id="processing-results"></div>
+            </div>
+
+            <div class="form-container">
+                <h3>Configurações de Importação</h3>
+                
+                <div class="config-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <h4>Produtos</h4>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="config-atualizar-produtos" checked>
+                            Atualizar produtos existentes
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="config-criar-produtos" checked>
+                            Criar novos produtos automaticamente
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="config-atualizar-estoque" checked>
+                            Atualizar estoque baseado na XML
+                        </label>
+                    </div>
+                    
+                    <div>
+                        <h4>Fornecedores</h4>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="config-criar-fornecedores" checked>
+                            Cadastrar fornecedores automaticamente
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="config-registrar-compra">
+                            Registrar como compra no sistema
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="xml-history">
+                <h3>Histórico de Importações</h3>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Arquivo</th>
+                                <th>Status</th>
+                                <th>Produtos</th>
+                                <th>Fornecedor</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="xml-history-table">
+                            <!-- Import history will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- XML Detail Modal -->
+    <div id="xml-detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('xml-detail-modal')">&times;</span>
+            <h3>Detalhes da Importação</h3>
+            <div id="xml-detail-content">
+                <!-- XML import details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/importar-xml.js"></script>
+</body>
+</html>
