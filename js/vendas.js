@@ -222,12 +222,13 @@ function loadVendasRecentes() {
     const tbody = document.getElementById('vendas-recentes-table');
 
     if (recentVendas.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="text-center">Nenhuma venda realizada</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center">Nenhuma venda realizada</td></tr>';
         return;
     }
 
     tbody.innerHTML = recentVendas.map(venda => `
         <tr>
+            <td>${venda.controle || '-'}</td>
             <td>${dataManager.formatDate(venda.dataVenda)}</td>
             <td>${venda.clienteNome}</td>
             <td>${dataManager.formatCurrency(venda.total)}</td>

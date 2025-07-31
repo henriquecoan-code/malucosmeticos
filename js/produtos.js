@@ -54,7 +54,6 @@ function saveProduto() {
     
     const produto = {
         id: document.getElementById('produto-id').value || null,
-        codigo: document.getElementById('produto-codigo').value,
         nome: document.getElementById('produto-nome').value,
         categoria: document.getElementById('produto-categoria').value,
         descricao: document.getElementById('produto-descricao').value,
@@ -64,14 +63,11 @@ function saveProduto() {
         estoqueMinimo: parseInt(document.getElementById('produto-estoque-minimo').value) || 5
     };
     
-    // Check if code already exists (for new products)
-    if (!produto.id) {
-        const produtos = dataManager.getProdutos();
-        if (produtos.some(p => p.codigo === produto.codigo)) {
-            showAlert('Já existe um produto com este código.', 'error');
-            return;
-        }
+    // For existing products, preserve the existing code
+    if (produto.id) {
+        produto.codigo = document.getElementById('produto-codigo').value;
     }
+    // For new products, codigo will be generated automatically in DataManager
     
     dataManager.saveProduto(produto);
     loadProdutos();

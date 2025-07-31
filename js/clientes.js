@@ -9,12 +9,13 @@ function loadClientes() {
     const tbody = document.getElementById('clientes-table-body');
     
     if (clientes.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center">Nenhum cliente cadastrado</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center">Nenhum cliente cadastrado</td></tr>';
         return;
     }
     
     tbody.innerHTML = clientes.map(cliente => `
         <tr>
+            <td>${cliente.codigo || '-'}</td>
             <td>${cliente.nome}</td>
             <td>${formatCPF(cliente.cpf) || '-'}</td>
             <td>${cliente.telefone}</td>
@@ -242,6 +243,7 @@ function searchClientes() {
     
     const filteredClientes = clientes.filter(cliente => 
         cliente.nome.toLowerCase().includes(searchTerm) ||
+        (cliente.codigo && cliente.codigo.toLowerCase().includes(searchTerm)) ||
         (cliente.cpf && cliente.cpf.includes(searchTerm.replace(/\D/g, ''))) ||
         cliente.telefone.toLowerCase().includes(searchTerm) ||
         (cliente.email && cliente.email.toLowerCase().includes(searchTerm))
@@ -250,12 +252,13 @@ function searchClientes() {
     const tbody = document.getElementById('clientes-table-body');
     
     if (filteredClientes.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center">Nenhum cliente encontrado</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center">Nenhum cliente encontrado</td></tr>';
         return;
     }
     
     tbody.innerHTML = filteredClientes.map(cliente => `
         <tr>
+            <td>${cliente.codigo || '-'}</td>
             <td>${cliente.nome}</td>
             <td>${formatCPF(cliente.cpf) || '-'}</td>
             <td>${cliente.telefone}</td>
