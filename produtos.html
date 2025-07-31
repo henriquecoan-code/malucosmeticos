@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Malú Cosméticos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>Malú Cosméticos</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="produtos.html" class="nav-link active">Produtos</a></li>
+                <li><a href="vendas.html" class="nav-link">Vendas</a></li>
+                <li><a href="clientes.html" class="nav-link">Clientes</a></li>
+                <li><a href="historico.html" class="nav-link">Histórico</a></li>
+                <li><a href="crediario.html" class="nav-link">Crediário</a></li>
+                <li><a href="importar-xml.html" class="nav-link">Importar XML</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="produtos-page">
+            <div class="flex justify-between align-center mb-3">
+                <h2>Gestão de Produtos</h2>
+                <button class="btn btn-primary" onclick="showModal('produto-modal')">
+                    Novo Produto
+                </button>
+            </div>
+
+            <div class="form-container">
+                <h3>Pesquisar Produtos</h3>
+                <div class="flex gap-1">
+                    <input type="text" id="search-produto" placeholder="Buscar por nome, código ou categoria" 
+                           style="flex: 1;" onkeyup="searchProdutos()">
+                    <button class="btn btn-secondary" onclick="searchProdutos()">Buscar</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Estoque</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="produtos-table-body">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Product Modal -->
+    <div id="produto-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('produto-modal')">&times;</span>
+            <h3 id="modal-title">Novo Produto</h3>
+            
+            <form id="produto-form">
+                <input type="hidden" id="produto-id">
+                
+                <div class="form-group">
+                    <label for="produto-codigo">Código do Produto *</label>
+                    <input type="text" id="produto-codigo" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="produto-nome">Nome *</label>
+                    <input type="text" id="produto-nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="produto-categoria">Categoria *</label>
+                    <select id="produto-categoria" required>
+                        <option value="">Selecione uma categoria</option>
+                        <option value="maquiagem">Maquiagem</option>
+                        <option value="cuidados-pele">Cuidados com a Pele</option>
+                        <option value="perfumaria">Perfumaria</option>
+                        <option value="cabelos">Cabelos</option>
+                        <option value="acessorios">Acessórios</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="produto-descricao">Descrição</label>
+                    <textarea id="produto-descricao" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="produto-preco">Preço de Venda *</label>
+                    <input type="number" id="produto-preco" step="0.01" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="produto-custo">Preço de Custo</label>
+                    <input type="number" id="produto-custo" step="0.01" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="produto-estoque">Estoque Atual *</label>
+                    <input type="number" id="produto-estoque" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="produto-estoque-minimo">Estoque Mínimo</label>
+                    <input type="number" id="produto-estoque-minimo" min="0" value="5">
+                </div>
+                
+                <div class="flex gap-1 mt-2">
+                    <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideModal('produto-modal')">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/produtos.js"></script>
+</body>
+</html>

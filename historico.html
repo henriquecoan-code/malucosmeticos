@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Compras - Malú Cosméticos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>Malú Cosméticos</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="produtos.html" class="nav-link">Produtos</a></li>
+                <li><a href="vendas.html" class="nav-link">Vendas</a></li>
+                <li><a href="clientes.html" class="nav-link">Clientes</a></li>
+                <li><a href="historico.html" class="nav-link active">Histórico</a></li>
+                <li><a href="crediario.html" class="nav-link">Crediário</a></li>
+                <li><a href="importar-xml.html" class="nav-link">Importar XML</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="historico-page">
+            <h2>Histórico de Compras</h2>
+
+            <div class="form-container">
+                <h3>Filtros</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 1rem; align-items: end;">
+                    <div class="form-group">
+                        <label for="filtro-cliente">Cliente</label>
+                        <select id="filtro-cliente">
+                            <option value="">Todos os clientes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="filtro-data-inicio">Data Início</label>
+                        <input type="date" id="filtro-data-inicio">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="filtro-data-fim">Data Fim</label>
+                        <input type="date" id="filtro-data-fim">
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="aplicarFiltros()">
+                        Filtrar
+                    </button>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <button class="btn btn-secondary" onclick="limparFiltros()">Limpar Filtros</button>
+                    <button class="btn btn-success" onclick="exportarHistorico()">Exportar CSV</button>
+                </div>
+            </div>
+
+            <div class="stats-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div class="card">
+                    <h4>Total de Vendas</h4>
+                    <p class="card-number" id="total-vendas-count">0</p>
+                </div>
+                <div class="card">
+                    <h4>Valor Total</h4>
+                    <p class="card-number" id="total-vendas-valor">R$ 0,00</p>
+                </div>
+                <div class="card">
+                    <h4>Ticket Médio</h4>
+                    <p class="card-number" id="ticket-medio">R$ 0,00</p>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Cliente</th>
+                            <th>Itens</th>
+                            <th>Total</th>
+                            <th>Forma Pagamento</th>
+                            <th>Nota Fiscal</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historico-table-body">
+                        <!-- History will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="pagination" class="text-center" style="margin-top: 2rem;">
+                <!-- Pagination will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Sale Detail Modal -->
+    <div id="venda-detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('venda-detail-modal')">&times;</span>
+            <h3>Detalhes da Venda</h3>
+            <div id="venda-detail-content">
+                <!-- Sale details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/historico.js"></script>
+</body>
+</html>

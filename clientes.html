@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes - Malú Cosméticos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>Malú Cosméticos</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="produtos.html" class="nav-link">Produtos</a></li>
+                <li><a href="vendas.html" class="nav-link">Vendas</a></li>
+                <li><a href="clientes.html" class="nav-link active">Clientes</a></li>
+                <li><a href="historico.html" class="nav-link">Histórico</a></li>
+                <li><a href="crediario.html" class="nav-link">Crediário</a></li>
+                <li><a href="importar-xml.html" class="nav-link">Importar XML</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="clientes-page">
+            <div class="flex justify-between align-center mb-3">
+                <h2>Gestão de Clientes</h2>
+                <button class="btn btn-primary" onclick="showModal('cliente-modal')">
+                    Novo Cliente
+                </button>
+            </div>
+
+            <div class="form-container">
+                <h3>Pesquisar Clientes</h3>
+                <div class="flex gap-1">
+                    <input type="text" id="search-cliente" placeholder="Buscar por nome, CPF, telefone ou email" 
+                           style="flex: 1;" onkeyup="searchClientes()">
+                    <button class="btn btn-secondary" onclick="searchClientes()">Buscar</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Telefone</th>
+                            <th>Email</th>
+                            <th>Data Cadastro</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientes-table-body">
+                        <!-- Customers will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Customer Modal -->
+    <div id="cliente-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('cliente-modal')">&times;</span>
+            <h3 id="modal-title">Novo Cliente</h3>
+            
+            <form id="cliente-form">
+                <input type="hidden" id="cliente-id">
+                
+                <div class="form-group">
+                    <label for="cliente-nome">Nome Completo *</label>
+                    <input type="text" id="cliente-nome" required>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="cliente-cpf">CPF</label>
+                        <input type="text" id="cliente-cpf" placeholder="000.000.000-00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cliente-data-nascimento">Data de Nascimento</label>
+                        <input type="date" id="cliente-data-nascimento">
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="cliente-telefone">Telefone *</label>
+                        <input type="tel" id="cliente-telefone" placeholder="(00) 00000-0000" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cliente-email">Email</label>
+                        <input type="email" id="cliente-email">
+                    </div>
+                </div>
+                
+                <h4>Endereço</h4>
+                
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="cliente-endereco">Logradouro</label>
+                        <input type="text" id="cliente-endereco" placeholder="Rua, Avenida, etc.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cliente-numero">Número</label>
+                        <input type="text" id="cliente-numero">
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="cliente-bairro">Bairro</label>
+                        <input type="text" id="cliente-bairro">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cliente-cidade">Cidade</label>
+                        <input type="text" id="cliente-cidade">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cliente-cep">CEP</label>
+                        <input type="text" id="cliente-cep" placeholder="00000-000">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cliente-observacoes">Observações</label>
+                    <textarea id="cliente-observacoes" rows="3"></textarea>
+                </div>
+                
+                <div class="flex gap-1 mt-2">
+                    <button type="submit" class="btn btn-primary">Salvar Cliente</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideModal('cliente-modal')">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Customer Detail Modal -->
+    <div id="cliente-detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('cliente-detail-modal')">&times;</span>
+            <h3>Detalhes do Cliente</h3>
+            <div id="cliente-detail-content">
+                <!-- Customer details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/clientes.js"></script>
+</body>
+</html>
