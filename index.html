@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malú Cosméticos - Sistema de Gestão</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>Malú Cosméticos</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Dashboard</a></li>
+                <li><a href="produtos.html" class="nav-link">Produtos</a></li>
+                <li><a href="vendas.html" class="nav-link">Vendas</a></li>
+                <li><a href="clientes.html" class="nav-link">Clientes</a></li>
+                <li><a href="historico.html" class="nav-link">Histórico</a></li>
+                <li><a href="crediario.html" class="nav-link">Crediário</a></li>
+                <li><a href="importar-xml.html" class="nav-link">Importar XML</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard">
+            <h2>Dashboard do Sistema</h2>
+            
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Produtos</h3>
+                    <p class="card-number" id="total-produtos">0</p>
+                    <p>Total de produtos cadastrados</p>
+                    <a href="produtos.html" class="card-link">Gerenciar Produtos</a>
+                </div>
+                
+                <div class="card">
+                    <h3>Vendas Hoje</h3>
+                    <p class="card-number" id="vendas-hoje">R$ 0,00</p>
+                    <p>Total de vendas de hoje</p>
+                    <a href="vendas.html" class="card-link">Nova Venda</a>
+                </div>
+                
+                <div class="card">
+                    <h3>Clientes</h3>
+                    <p class="card-number" id="total-clientes">0</p>
+                    <p>Clientes cadastrados</p>
+                    <a href="clientes.html" class="card-link">Gerenciar Clientes</a>
+                </div>
+                
+                <div class="card">
+                    <h3>Crediário</h3>
+                    <p class="card-number" id="total-crediario">R$ 0,00</p>
+                    <p>Total em aberto</p>
+                    <a href="crediario.html" class="card-link">Ver Crediário</a>
+                </div>
+            </div>
+
+            <div class="recent-activities">
+                <h3>Atividades Recentes</h3>
+                <div id="atividades-recentes">
+                    <p>Nenhuma atividade recente</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/common.js"></script>
+</body>
+</html>

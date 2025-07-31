@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendas - Malú Cosméticos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>Malú Cosméticos</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="produtos.html" class="nav-link">Produtos</a></li>
+                <li><a href="vendas.html" class="nav-link active">Vendas</a></li>
+                <li><a href="clientes.html" class="nav-link">Clientes</a></li>
+                <li><a href="historico.html" class="nav-link">Histórico</a></li>
+                <li><a href="crediario.html" class="nav-link">Crediário</a></li>
+                <li><a href="importar-xml.html" class="nav-link">Importar XML</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="vendas-page">
+            <h2>Sistema de Vendas</h2>
+
+            <div class="form-container">
+                <h3>Nova Venda</h3>
+                
+                <form id="venda-form">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-group">
+                            <label for="venda-cliente">Cliente</label>
+                            <select id="venda-cliente">
+                                <option value="">Cliente não cadastrado</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="venda-forma-pagamento">Forma de Pagamento *</label>
+                            <select id="venda-forma-pagamento" required>
+                                <option value="">Selecione</option>
+                                <option value="dinheiro">Dinheiro</option>
+                                <option value="cartao-debito">Cartão de Débito</option>
+                                <option value="cartao-credito">Cartão de Crédito</option>
+                                <option value="pix">PIX</option>
+                                <option value="crediario">Crediário</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Adicionar Produto</label>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 0.5rem; align-items: end;">
+                            <select id="produto-select">
+                                <option value="">Selecione um produto</option>
+                            </select>
+                            <input type="number" id="produto-quantidade" placeholder="Qtd" min="1" value="1">
+                            <input type="number" id="produto-preco" placeholder="Preço" step="0.01" min="0">
+                            <button type="button" class="btn btn-primary" onclick="adicionarProduto()">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container mb-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th>Preço Unit.</th>
+                                    <th>Subtotal</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="itens-venda">
+                                <tr>
+                                    <td colspan="5" class="text-center">Nenhum produto adicionado</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="text-align: right; margin-bottom: 1rem;">
+                        <h3>Total: <span id="total-venda">R$ 0,00</span></h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="venda-observacoes">Observações</label>
+                        <textarea id="venda-observacoes" rows="3"></textarea>
+                    </div>
+
+                    <div class="flex gap-1">
+                        <button type="submit" class="btn btn-primary">Finalizar Venda</button>
+                        <button type="button" class="btn btn-secondary" onclick="limparVenda()">Limpar</button>
+                        <button type="button" class="btn btn-success" onclick="emitirNotaFiscal()" id="btn-nota-fiscal" disabled>
+                            Emitir Nota Fiscal
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="vendas-recentes">
+                <h3>Vendas Recentes</h3>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Cliente</th>
+                                <th>Total</th>
+                                <th>Forma Pagamento</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vendas-recentes-table">
+                            <!-- Recent sales will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sale Detail Modal -->
+    <div id="venda-detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('venda-detail-modal')">&times;</span>
+            <h3>Detalhes da Venda</h3>
+            <div id="venda-detail-content">
+                <!-- Sale details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Fiscal Note Modal -->
+    <div id="nota-fiscal-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('nota-fiscal-modal')">&times;</span>
+            <h3>Emissão de Nota Fiscal</h3>
+            <div id="nota-fiscal-content">
+                <p>Simulação de integração com API de terceiros para emissão de nota fiscal.</p>
+                <div class="form-group">
+                    <label>Status da Emissão:</label>
+                    <div id="nota-fiscal-status">Processando...</div>
+                </div>
+                <div id="nota-fiscal-details" style="display: none;">
+                    <h4>Nota Fiscal Emitida</h4>
+                    <p><strong>Número:</strong> <span id="nota-numero"></span></p>
+                    <p><strong>Série:</strong> <span id="nota-serie"></span></p>
+                    <p><strong>Chave de Acesso:</span> <span id="nota-chave"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/vendas.js"></script>
+</body>
+</html>
